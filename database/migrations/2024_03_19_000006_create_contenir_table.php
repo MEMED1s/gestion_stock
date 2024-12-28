@@ -10,8 +10,8 @@ return new class extends Migration
     {
         Schema::create('contenir', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('commande_id')->constrained();
-            $table->foreignId('produit_id')->constrained();
+            $table->foreignId('commande_id')->constrained()->onDelete('cascade');
+            $table->foreignId('produit_id')->constrained()->onDelete('cascade');
             $table->integer('quantite');
             $table->decimal('prix_unitaire', 10, 2);
             $table->timestamps();
