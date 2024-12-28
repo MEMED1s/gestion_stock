@@ -45,20 +45,48 @@ class CategorieController extends Controller
 
         $categorie->update($validated);
 
+        if ($request->ajax()) {
+            return response()->json([
+                'success' => true,
+                'message' => 'Catégorie mise à jour avec succès.'
+            ]);
+        }
+
         return redirect()->route('categories.index')
             ->with('success', 'Catégorie mise à jour avec succès.');
     }
 
-    public function destroy(Categorie $categorie)
+    public function destroy(Categorie $category)
     {
-        if ($categorie->produits()->exists()) {
+        try {
+            if ($category->produits()->exists()) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Impossible de supprimer une catégorie contenant des produits.'
+                ], 422);
+            }
+
+            $category->delete();
+
+            if (request()->wantsJson()) {
+                return response()->json([
+                    'success' => true,
+                    'message' => 'Catégorie supprimée avec succès.'
+                ]);
+            }
+
             return redirect()->route('categories.index')
-                ->with('error', 'Impossible de supprimer une catégorie contenant des produits.');
+                ->with('success', 'Catégorie supprimée avec succès.');
+        } catch (\Exception $e) {
+            if (request()->wantsJson()) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Une erreur est survenue lors de la suppression.'
+                ], 500);
+            }
+
+            return redirect()->route('categories.index')
+                ->with('error', 'Une erreur est survenue lors de la suppression.');
         }
-
-        $categorie->delete();
-
-        return redirect()->route('categories.index')
-            ->with('success', 'Catégorie supprimée avec succès.');
     }
 } 

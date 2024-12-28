@@ -18,7 +18,9 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     // Routes pour les ressources
     Route::resource('produits', ProduitController::class);
-    Route::resource('categories', CategorieController::class);
+    Route::resource('categories', CategorieController::class)->parameters([
+        'categories' => 'categorie'
+    ]);
     Route::resource('fournisseurs', FournisseurController::class);
     Route::resource('clients', ClientController::class);
     Route::resource('commandes', CommandeController::class);

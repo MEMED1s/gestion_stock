@@ -25,12 +25,12 @@ class ProduitController extends Controller
     public function store(Request $request)
     {
         $validated = $request->validate([
-            'nom' => 'required',
-            'description' => 'nullable',
+            'nom' => 'required|string|max:255',
+            'description' => 'nullable|string',
             'prix' => 'required|numeric|min:0',
             'quantite_stock' => 'required|integer|min:0',
             'categorie_id' => 'required|exists:categories,id',
-            'fournisseur_id' => 'required|exists:fournisseurs,id'
+            'fournisseur_id' => 'required|exists:fournisseurs,id',
         ]);
 
         Produit::create($validated);

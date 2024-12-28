@@ -144,3 +144,16 @@
         @apply status-badge bg-red-100 text-red-800;
     }
 }
+
+@keyframes fadeOut {
+    from { opacity: 1; transform: scale(1); }
+    to { opacity: 0; transform: scale(0.95); }
+}
+
+.animate-fadeOut {
+    animation: fadeOut 0.2s ease-in forwards;
+}
+
+[x-cloak] {
+    display: none !important;
+}
