@@ -4,16 +4,19 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Produit extends Model
 {
+    use HasFactory;
+
     protected $fillable = [
         'nom',
         'description',
         'prix',
         'quantite_stock',
-        'categorie_id'
+        'categorie_id',
+        'fournisseur_id'
     ];
 
     public function categorie(): BelongsTo
@@ -21,9 +24,8 @@ class Produit extends Model
         return $this->belongsTo(Categorie::class);
     }
 
-    public function commandes(): BelongsToMany
+    public function fournisseur(): BelongsTo
     {
-        return $this->belongsToMany(Commande::class, 'contenir')
-            ->withPivot('quantite', 'prix_unitaire');
+        return $this->belongsTo(Fournisseur::class);
     }
 } 
