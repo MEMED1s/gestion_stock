@@ -9,9 +9,18 @@ use Illuminate\Database\Seeder;
 
 class CommandeSeeder extends Seeder
 {
+
+
+
+
+
+
+
+
+
     public function run()
     {
-        // Créez quelques commandes de test
+
         $clients = Client::all();
         $produits = Produit::all();
 
@@ -20,10 +29,8 @@ class CommandeSeeder extends Seeder
                 'client_id' => $client->id,
                 'date_commande' => now(),
                 'statut' => 'validée',
-                'total' => 0
+                    'total' => 0
             ]);
-
-            // Ajouter des produits à la commande
             $total = 0;
             foreach ($produits->random(rand(1, 3)) as $produit) {
                 $quantite = rand(1, 5);
@@ -36,7 +43,20 @@ class CommandeSeeder extends Seeder
                 ]);
             }
 
-            $commande->update(['total' => $total]);
+                $commande->update(['total' => $total]);
         }
     }
-} 
+
+
+
+
+
+
+
+
+
+
+
+
+
+}
